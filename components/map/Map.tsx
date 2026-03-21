@@ -422,8 +422,8 @@ export function Map({ onNodeClick }: MapProps) {
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
       const { width, height } = sizeRef.current;
-      const minScale = Math.min(width, height) * 0.25;
-      const maxScale = Math.min(width, height) * 2.5;
+      const minScale = Math.min(width, height) * 0.15;
+      const maxScale = Math.min(width, height) * 5;
       scaleRef.current = Math.max(
         minScale,
         Math.min(maxScale, scaleRef.current * (1 - e.deltaY * 0.001))
