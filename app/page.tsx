@@ -10,9 +10,9 @@ import { SourcesDropdown } from "@/components/hud/SourcesDropdown";
 import { HudFrame } from "@/components/hud/HudFrame";
 import type { NetworkNode } from "@/lib/data/nodes";
 
-// Dynamic import for 3D globe (heavy, client-only)
-const Globe = dynamic(
-  () => import("@/components/globe/Globe").then((m) => m.Globe),
+// Dynamic import for 2D map (client-only, uses D3 + Canvas)
+const Map = dynamic(
+  () => import("@/components/map/Map").then((m) => m.Map),
   { ssr: false }
 );
 
@@ -42,9 +42,9 @@ export default function Home() {
       <HudFrame />
       <TopBar />
 
-      {/* 3D Globe fills the viewport */}
+      {/* 2D Orthographic map fills the viewport */}
       <div className="absolute inset-0">
-        <Globe onNodeClick={handleNodeClick} />
+        <Map onNodeClick={handleNodeClick} />
       </div>
 
       {/* HUD overlays */}
