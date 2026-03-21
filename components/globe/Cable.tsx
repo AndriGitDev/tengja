@@ -13,10 +13,13 @@ interface CableProps {
   particleCount?: number;
 }
 
-export function Cable({ route, color, particleCount = 40 }: CableProps) {
+export function Cable({ route, color, particleCount = 50 }: CableProps) {
   const particlesRef = useRef<THREE.InstancedMesh>(null);
   const progressRef = useRef<Float32Array>(
     new Float32Array(particleCount).map(() => Math.random())
+  );
+  const speedRef = useRef<Float32Array>(
+    new Float32Array(particleCount).map(() => 0.06 + Math.random() * 0.04)
   );
 
   const curve = useMemo(() => {
@@ -29,7 +32,9 @@ export function Cable({ route, color, particleCount = 40 }: CableProps) {
 
   // Static cable line points
   const linePoints = useMemo(() => {
-    return curve.getPoints(100).map((p) => [p.x, p.y, p.z] as [number, number, number]);
+    return curve
+      .getPoints(150)
+      .map((p) => [p.x, p.y, p.z] as [number, number, number]);
   }, [curve]);
 
   const dummy = useMemo(() => new THREE.Object3D(), []);
@@ -37,18 +42,20 @@ export function Cable({ route, color, particleCount = 40 }: CableProps) {
   useFrame((_, delta) => {
     if (!particlesRef.current) return;
     const progress = progressRef.current;
+    const speeds = speedRef.current;
 
     for (let i = 0; i < particleCount; i++) {
-      progress[i] = (progress[i] + delta * 0.08) % 1;
+      progress[i] = (progress[i] + delta * speeds[i]) % 1;
       const point = curve.getPoint(progress[i]);
 
-      // Slight lift above globe surface
+      // Lift above globe surface
       const dir = point.clone().normalize();
-      point.add(dir.multiplyScalar(0.003));
+      point.add(dir.multiplyScalar(0.004));
 
       dummy.position.copy(point);
-      const scale = 0.6 + Math.sin(progress[i] * Math.PI) * 0.4;
-      dummy.scale.setScalar(scale * 0.003);
+      // Particles brighten in the middle of the cable path
+      const scale = 0.5 + Math.sin(progress[i] * Math.PI) * 0.5;
+      dummy.scale.setScalar(scale * 0.004);
       dummy.updateMatrix();
       particlesRef.current.setMatrixAt(i, dummy.matrix);
     }
@@ -57,13 +64,22 @@ export function Cable({ route, color, particleCount = 40 }: CableProps) {
 
   return (
     <group>
-      {/* Cable path line */}
+      {/* Cable path — main line */}
       <Line
         points={linePoints}
         color={color}
-        lineWidth={1}
+        lineWidth={1.5}
         transparent
-        opacity={0.3}
+        opacity={0.5}
+      />
+
+      {/* Cable path — glow line (wider, dimmer) */}
+      <Line
+        points={linePoints}
+        color={color}
+        lineWidth={4}
+        transparent
+        opacity={0.08}
       />
 
       {/* Flowing particles */}
@@ -71,8 +87,8 @@ export function Cable({ route, color, particleCount = 40 }: CableProps) {
         ref={particlesRef}
         args={[undefined, undefined, particleCount]}
       >
-        <sphereGeometry args={[1, 6, 6]} />
-        <meshBasicMaterial color={color} transparent opacity={0.9} />
+        <sphereGeometry args={[1, 8, 8]} />
+        <meshBasicMaterial color={color} transparent opacity={0.95} />
       </instancedMesh>
     </group>
   );

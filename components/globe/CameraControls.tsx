@@ -16,8 +16,8 @@ export function CameraControls() {
       idleTimer.current = 0;
     } else {
       idleTimer.current += delta;
-      // Start auto-rotate after 3 seconds of inactivity
-      if (idleTimer.current > 3) {
+      // Start auto-rotate after 8 seconds of inactivity
+      if (idleTimer.current > 8) {
         controlsRef.current.autoRotate = true;
       }
     }
@@ -31,7 +31,7 @@ export function CameraControls() {
       minDistance={1.5}
       maxDistance={4}
       autoRotate
-      autoRotateSpeed={0.3}
+      autoRotateSpeed={0.15}
       onStart={() => {
         isInteracting.current = true;
         if (controlsRef.current) {

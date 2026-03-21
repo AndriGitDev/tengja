@@ -14,11 +14,24 @@ interface GlobeProps {
   onNodeClick?: (node: NetworkNode) => void;
 }
 
+// Camera starts looking at Iceland (lat ~64.5, lng ~-19)
+// Convert to 3D position on a sphere of radius ~2.4
+const icelandLat = 64.5;
+const icelandLng = -19;
+const camDist = 2.4;
+const phi = (90 - icelandLat) * (Math.PI / 180);
+const theta = (icelandLng + 180) * (Math.PI / 180);
+const initialCamera: [number, number, number] = [
+  -(camDist * Math.sin(phi) * Math.cos(theta)),
+  camDist * Math.cos(phi),
+  camDist * Math.sin(phi) * Math.sin(theta),
+];
+
 export function Globe({ onNodeClick }: GlobeProps) {
   return (
     <Canvas
       camera={{
-        position: [0.8, 0.8, 1.8],
+        position: initialCamera,
         fov: 45,
         near: 0.1,
         far: 1000,
@@ -26,7 +39,8 @@ export function Globe({ onNodeClick }: GlobeProps) {
       style={{ background: "#0a0a0f" }}
       gl={{ antialias: true, alpha: false }}
     >
-      <ambientLight intensity={0.1} />
+      <ambientLight intensity={0.15} />
+      <directionalLight position={[5, 3, 5]} intensity={0.08} color="#4488ff" />
 
       <Stars />
       <Earth />

@@ -19,13 +19,17 @@ const fragmentShader = `
   void main() {
     vec3 viewDir = normalize(-vPosition);
     float rim = 1.0 - max(0.0, dot(viewDir, vNormal));
-    rim = pow(rim, 3.0);
-    vec3 color = mix(vec3(0.0, 0.4, 1.0), vec3(0.3, 0.8, 1.0), rim);
-    gl_FragColor = vec4(color, rim * 0.4);
+    float innerGlow = pow(rim, 2.0);
+    float outerGlow = pow(rim, 4.0);
+    vec3 innerColor = vec3(0.0, 0.35, 0.8);
+    vec3 outerColor = vec3(0.0, 0.7, 1.0);
+    vec3 color = mix(innerColor, outerColor, outerGlow);
+    float alpha = innerGlow * 0.25 + outerGlow * 0.4;
+    gl_FragColor = vec4(color, alpha);
   }
 `;
 
-export function Atmosphere({ radius = 1.02 }: { radius?: number }) {
+export function Atmosphere({ radius = 1.025 }: { radius?: number }) {
   const material = useMemo(
     () =>
       new THREE.ShaderMaterial({
@@ -34,6 +38,7 @@ export function Atmosphere({ radius = 1.02 }: { radius?: number }) {
         transparent: true,
         side: THREE.BackSide,
         depthWrite: false,
+        blending: THREE.AdditiveBlending,
       }),
     []
   );
