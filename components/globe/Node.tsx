@@ -51,10 +51,10 @@ export function Node({ node, onClick }: NodeProps) {
     pulseRef.current += delta;
     const t = pulseRef.current;
 
-    // Scale nodes based on camera distance — closer = larger nodes
+    // Scale nodes to maintain consistent apparent size regardless of zoom
     const camDist = state.camera.position.length();
-    // At minDistance (1.05) → zoomScale ~2.5, at default (1.8) → ~1.0, at maxDistance (4) → ~0.5
-    const zoomScale = THREE.MathUtils.clamp(1.8 / camDist, 0.5, 2.5);
+    // At default (1.8) → 1.0, closer → smaller, farther → larger
+    const zoomScale = THREE.MathUtils.clamp(camDist / 1.8, 0.6, 2.0);
 
     if (groupRef.current) {
       groupRef.current.scale.setScalar(zoomScale);

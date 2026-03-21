@@ -7,7 +7,7 @@ export function CameraControls() {
     <OrbitControls
       enablePan={false}
       enableZoom={true}
-      minDistance={1.05}
+      minDistance={1.15}
       maxDistance={4}
     />
   );
