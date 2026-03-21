@@ -1,7 +1,7 @@
 export interface NetworkNode {
   id: string;
   name: string;
-  type: "landing" | "datacenter" | "ixp" | "probe";
+  type: "landing" | "datacenter" | "ixp" | "probe" | "pop";
   lat: number;
   lng: number;
   description: string;
@@ -9,24 +9,33 @@ export interface NetworkNode {
 }
 
 export const nodes: NetworkNode[] = [
-  // Cable landing points
+  // ── Cable landing stations ──────────────────────────────────
   {
     id: "landeyjar",
     name: "Landeyjar",
     type: "landing",
-    lat: 63.53,
-    lng: -20.27,
-    description: "Cable landing station for DANICE and Greenland Connect",
+    lat: 63.533,
+    lng: -20.215,
+    description: "Landing station for DANICE and Greenland Connect",
     cables: ["danice", "greenland-connect"],
   },
   {
     id: "seydisfjordur",
     name: "Seyðisfjörður",
     type: "landing",
-    lat: 65.26,
-    lng: -14.0,
-    description: "Cable landing station for FARICE-1",
+    lat: 65.259,
+    lng: -14.01,
+    description: "FARICE-1 landing station (2004)",
     cables: ["farice1"],
+  },
+  {
+    id: "thorlakshofn",
+    name: "Þorlákshöfn",
+    type: "landing",
+    lat: 63.856,
+    lng: -21.383,
+    description: "IRIS cable landing (2025) — first direct Iceland-Ireland link",
+    cables: ["iris"],
   },
   {
     id: "blaabjerg",
@@ -73,29 +82,173 @@ export const nodes: NetworkNode[] = [
     description: "Greenland Connect terminus — North American backbone",
     cables: ["greenland-connect"],
   },
-  // Data centers & IX
   {
-    id: "rvk-ix",
-    name: "Múli-IXP, Reykjavík",
-    type: "ixp",
-    lat: 64.15,
-    lng: -21.7,
-    description: "Iceland's Internet Exchange Point — 6 members, 100G+ capacity",
+    id: "galway",
+    name: "Galway, Ireland",
+    type: "landing",
+    lat: 53.27,
+    lng: -9.05,
+    description: "IRIS terminus — connects to Irish and European backbone",
+    cables: ["iris"],
   },
+
+  // ── Data centers ────────────────────────────────────────────
   {
-    id: "rvk-dc1",
+    id: "verne-global",
     name: "Verne Global (Keflavík)",
     type: "datacenter",
-    lat: 63.95,
-    lng: -22.7,
-    description: "Major data center campus — 100% renewable energy",
+    lat: 63.951,
+    lng: -22.567,
+    description: "100 MW campus on former NATO base — major HPC/AI facility, 100% renewable",
   },
   {
-    id: "rvk-dc2",
-    name: "atNorth (Kópavogur)",
+    id: "atnorth-ice01",
+    name: "atNorth ICE01 (Hafnarfjörður)",
     type: "datacenter",
-    lat: 64.22,
-    lng: -21.45,
-    description: "Colocation and cloud services facility",
+    lat: 64.0495,
+    lng: -21.9953,
+    description: "Metro colocation site in greater Reykjavík area",
+  },
+  {
+    id: "atnorth-ice02",
+    name: "atNorth ICE02 (Keflavík)",
+    type: "datacenter",
+    lat: 63.971,
+    lng: -22.523,
+    description: "Tier 3 campus, 9 hectare site near Keflavík airport",
+  },
+  {
+    id: "atnorth-ice03",
+    name: "atNorth ICE03 (Akureyri)",
+    type: "datacenter",
+    lat: 65.659,
+    lng: -18.087,
+    description: "Tier 3 facility in North Iceland — 4.3 hectare campus",
+  },
+  {
+    id: "borealis-blonduos",
+    name: "Borealis DC (Blönduós)",
+    type: "datacenter",
+    lat: 65.661,
+    lng: -20.287,
+    description: "Up to 100 MW — adjacent to Blanda hydropower station",
+  },
+  {
+    id: "borealis-fitjar",
+    name: "Borealis DC Fitjar (Keflavík)",
+    type: "datacenter",
+    lat: 63.967,
+    lng: -22.543,
+    description: "10 MW, 21,000 m² — 100% renewable energy",
+  },
+  {
+    id: "borealis-rvk",
+    name: "Borealis DC (Reykjavík)",
+    type: "datacenter",
+    lat: 64.112,
+    lng: -21.848,
+    description: "Korputorg facility — up to 7,000 m²",
+  },
+
+  // ── Internet Exchange Points (RIX) ─────────────────────────
+  {
+    id: "rix-tg",
+    name: "RIX-TG (Tæknigarður)",
+    type: "ixp",
+    lat: 64.139,
+    lng: -21.951,
+    description: "Primary RIX site at University of Iceland — 27+ members, 100G peering",
+  },
+  {
+    id: "rix-k2",
+    name: "RIX-K2 (Katrínartún)",
+    type: "ixp",
+    lat: 64.131,
+    lng: -21.895,
+    description: "Secondary RIX peering location",
+  },
+  {
+    id: "rix-mh",
+    name: "RIX-MH (Ármúli)",
+    type: "ixp",
+    lat: 64.1353,
+    lng: -21.8765,
+    description: "Third RIX peering location — co-located with Síminn/Míla",
+  },
+
+  // ── RIPE Atlas probes ───────────────────────────────────────
+  {
+    id: "probe-nova",
+    name: "Nova Probe (Kópavogur)",
+    type: "probe",
+    lat: 64.0575,
+    lng: -21.9685,
+    description: "RIPE Atlas — AS44735 Nova hf.",
+  },
+  {
+    id: "probe-siminn",
+    name: "Síminn Probe (Reykjavík)",
+    type: "probe",
+    lat: 64.0805,
+    lng: -21.8205,
+    description: "RIPE Atlas — AS6677 Síminn",
+  },
+  {
+    id: "probe-rhnet",
+    name: "RHnet Probe (University)",
+    type: "probe",
+    lat: 64.1385,
+    lng: -21.9625,
+    description: "RIPE Atlas — AS15474 Icelandic University Research Network",
+  },
+  {
+    id: "probe-farice",
+    name: "Farice Probe (Keflavík)",
+    type: "probe",
+    lat: 64.0005,
+    lng: -22.5605,
+    description: "RIPE Atlas — AS56704 Farice ehf.",
+  },
+  {
+    id: "probe-harpa",
+    name: "Harpa Probe (Reykjavík)",
+    type: "probe",
+    lat: 64.1485,
+    lng: -21.9295,
+    description: "RIPE Atlas — AS212926 near Harpa Concert Hall",
+  },
+
+  // ── Telecom PoPs ────────────────────────────────────────────
+  {
+    id: "siminn-hq",
+    name: "Síminn HQ",
+    type: "pop",
+    lat: 64.1353,
+    lng: -21.8765,
+    description: "Iceland's incumbent telco — major network hub, hosts RIX-MH",
+  },
+  {
+    id: "mila-hq",
+    name: "Míla HQ",
+    type: "pop",
+    lat: 64.11,
+    lng: -21.864,
+    description: "Operates Iceland's largest trunk network, copper, and FTTH fibre",
+  },
+  {
+    id: "nova-hq",
+    name: "Nova HQ",
+    type: "pop",
+    lat: 64.124,
+    lng: -21.867,
+    description: "Major mobile and broadband provider",
+  },
+  {
+    id: "hringdu-hq",
+    name: "Hringdu HQ",
+    type: "pop",
+    lat: 64.1355,
+    lng: -21.874,
+    description: "Fixed internet and VoIP provider — ~10% market share",
   },
 ];

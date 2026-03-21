@@ -14,6 +14,7 @@ const typeColors: Record<string, string> = {
   datacenter: "#ffaa00",
   ixp: "#00ff88",
   probe: "#8888ff",
+  pop: "#cc66ff",
 };
 
 const typeScale: Record<string, number> = {
@@ -21,6 +22,7 @@ const typeScale: Record<string, number> = {
   datacenter: 0.85,
   ixp: 1.1,
   probe: 0.7,
+  pop: 0.75,
 };
 
 const nordics = new Set([
@@ -358,8 +360,8 @@ export function Map({ onNodeClick }: MapProps) {
 
         projectionRef.current.translate([width / 2, height / 2]);
 
-        // Scale based on container size
-        const baseScale = Math.min(width, height) * 0.55;
+        // Default to max zoom (close-up on Iceland)
+        const baseScale = Math.min(width, height) * 5;
         scaleRef.current = baseScale;
         projectionRef.current.scale(baseScale);
 
