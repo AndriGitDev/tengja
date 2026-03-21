@@ -18,7 +18,7 @@ interface GlobeProps {
 // Convert to 3D position on a sphere of radius ~2.4
 const icelandLat = 64.5;
 const icelandLng = -19;
-const camDist = 2.4;
+const camDist = 1.8;
 const phi = (90 - icelandLat) * (Math.PI / 180);
 const theta = (icelandLng + 180) * (Math.PI / 180);
 const initialCamera: [number, number, number] = [
