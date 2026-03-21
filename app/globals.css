@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+:root {
+  --noc-bg: #0a0a0f;
+  --noc-surface: #111118;
+  --noc-border: #1a1a25;
+  --noc-text: #e0e0e8;
+  --noc-text-dim: #6a6a7a;
+  --noc-cyan: #00f0ff;
+  --noc-amber: #ffaa00;
+  --noc-green: #00ff88;
+  --noc-red: #ff4444;
+  --noc-glow-cyan: 0 0 20px rgba(0, 240, 255, 0.3);
+  --noc-glow-amber: 0 0 20px rgba(255, 170, 0, 0.3);
+  --noc-glow-green: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--noc-bg);
+  color: var(--noc-text);
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+/* Scanline overlay */
+.scanline {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 240, 255, 0.015) 2px,
+    rgba(0, 240, 255, 0.015) 4px
+  );
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--noc-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--noc-border);
+  border-radius: 2px;
+}
+
+/* Glow text utility */
+.glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 30px rgba(0, 240, 255, 0.2);
+}
+.glow-amber {
+  text-shadow: 0 0 10px rgba(255, 170, 0, 0.5), 0 0 30px rgba(255, 170, 0, 0.2);
+}
+.glow-green {
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5), 0 0 30px rgba(0, 255, 136, 0.2);
+}
+
+/* Pulse animation */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Corner bracket decorations */
+.hud-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--noc-cyan);
+  opacity: 0.3;
+}
+.hud-corner-tl {
+  top: 8px; left: 8px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+.hud-corner-tr {
+  top: 8px; right: 8px;
+  border-top: 1px solid;
+  border-right: 1px solid;
+}
+.hud-corner-bl {
+  bottom: 8px; left: 8px;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+}
+.hud-corner-br {
+  bottom: 8px; right: 8px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+}
