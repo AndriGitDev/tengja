@@ -51,6 +51,15 @@ export function Node({ node, onClick }: NodeProps) {
     pulseRef.current += delta;
     const t = pulseRef.current;
 
+    // Scale nodes based on camera distance — closer = larger nodes
+    const camDist = state.camera.position.length();
+    // At minDistance (1.05) → zoomScale ~2.5, at default (1.8) → ~1.0, at maxDistance (4) → ~0.5
+    const zoomScale = THREE.MathUtils.clamp(1.8 / camDist, 0.5, 2.5);
+
+    if (groupRef.current) {
+      groupRef.current.scale.setScalar(zoomScale);
+    }
+
     if (outerRingRef.current) {
       outerRingRef.current.rotation.z += delta * 0.4;
       const pulseScale = hovered ? 1.6 : 1.0 + Math.sin(t * 1.5) * 0.15;
