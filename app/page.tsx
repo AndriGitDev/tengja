@@ -1,61 +1,25 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import dynamic from "next/dynamic";
-import { TopBar } from "@/components/hud/TopBar";
-import { CablePanel } from "@/components/hud/CablePanel";
-import { DetailPanel } from "@/components/hud/DetailPanel";
-import { MetricsTicker } from "@/components/hud/MetricsTicker";
-import { SourcesDropdown } from "@/components/hud/SourcesDropdown";
-import { HudFrame } from "@/components/hud/HudFrame";
-import type { NetworkNode } from "@/lib/data/nodes";
-
-// Dynamic import for 2D map (client-only, uses D3 + Canvas)
-const Map = dynamic(
-  () => import("@/components/map/Map").then((m) => m.Map),
-  { ssr: false }
-);
+import { Header } from "@/components/dashboard/Header";
+import { CableCards } from "@/components/dashboard/CableCards";
+import { NetworkDiagram } from "@/components/dashboard/NetworkDiagram";
+import { ProbePanel } from "@/components/dashboard/ProbePanel";
+import { TrafficChart } from "@/components/dashboard/TrafficChart";
+import { GlobalStats } from "@/components/dashboard/GlobalStats";
 
 export default function Home() {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [selectedType, setSelectedType] = useState<"cable" | "node" | null>(
-    null
-  );
-
-  const handleCableClick = useCallback((cableId: string) => {
-    setSelectedId(cableId);
-    setSelectedType("cable");
-  }, []);
-
-  const handleNodeClick = useCallback((node: NetworkNode) => {
-    setSelectedId(node.id);
-    setSelectedType("node");
-  }, []);
-
-  const handleClose = useCallback(() => {
-    setSelectedId(null);
-    setSelectedType(null);
-  }, []);
-
   return (
-    <main className="relative w-screen h-screen overflow-hidden">
-      <HudFrame />
-      <TopBar />
-
-      {/* Zoomable flat map fills the viewport */}
-      <div className="absolute inset-0">
-        <Map onNodeClick={handleNodeClick} />
+    <main className="min-h-screen bg-[var(--noc-bg)]">
+      <Header />
+      <div className="flex flex-col gap-4 py-4 max-w-[1400px] mx-auto">
+        <CableCards />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <NetworkDiagram />
+          <TrafficChart />
+        </div>
+        <ProbePanel />
+        <GlobalStats />
       </div>
-
-      {/* HUD overlays */}
-      <CablePanel onCableClick={handleCableClick} />
-      <DetailPanel
-        selectedId={selectedId}
-        type={selectedType}
-        onClose={handleClose}
-      />
-      <MetricsTicker />
-      <SourcesDropdown />
     </main>
   );
 }
