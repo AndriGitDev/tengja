@@ -42,7 +42,7 @@ export default function Home() {
       <HudFrame />
       <TopBar />
 
-      {/* 2D Orthographic map fills the viewport */}
+      {/* Zoomable flat map fills the viewport */}
       <div className="absolute inset-0">
         <Map onNodeClick={handleNodeClick} />
       </div>
