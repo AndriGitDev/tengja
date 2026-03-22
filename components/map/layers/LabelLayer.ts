@@ -37,18 +37,23 @@ export function drawClusterLabels(
   clusters: ClusterDot[],
   transitionAlpha: number,
 ): void {
-  const { ctx } = rc;
+  const { ctx, transform } = rc;
+  const zoomFactor = Math.min(Math.max(transform.k, 0.3), 4);
+
+  // Only show labels when zoomed in enough to read them
+  if (zoomFactor < 0.6) return;
 
   for (const cluster of clusters) {
+    const radius = (4 + cluster.nodeCount * 0.6) * zoomFactor;
+    const fontSize = Math.max(7, Math.min(9, 6 + zoomFactor * 2));
+
     ctx.save();
     ctx.globalAlpha = 0.6 * transitionAlpha;
     ctx.fillStyle = cluster.dominantColor;
-    ctx.font = "bold 9px 'Geist Mono', monospace";
+    ctx.font = `bold ${fontSize}px 'Geist Mono', monospace`;
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
-
-    const radius = 10 + cluster.nodeCount * 1.5;
-    ctx.fillText(cluster.nameIs, cluster.x, cluster.y + radius + 6);
+    ctx.fillText(cluster.nameIs, cluster.x, cluster.y + radius + 4);
     ctx.restore();
   }
 }

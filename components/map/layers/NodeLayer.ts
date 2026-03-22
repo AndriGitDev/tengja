@@ -11,40 +11,46 @@ export function drawClusters(
   clusters: ClusterDot[],
   transitionAlpha: number,
 ): void {
-  const { ctx, time } = rc;
+  const { ctx, time, transform } = rc;
   const t = time * 0.001;
 
+  // Scale clusters with zoom — small at low zoom, larger as you zoom in
+  const zoomFactor = Math.min(Math.max(transform.k, 0.3), 4);
+
   for (const cluster of clusters) {
-    const baseRadius = 10 + cluster.nodeCount * 1.5;
+    const baseRadius = (4 + cluster.nodeCount * 0.6) * zoomFactor;
     const pulse = 1 + Math.sin(t * 2) * 0.08;
-    const radius = baseRadius * pulse;
+    const radius = Math.max(baseRadius * pulse, 3);
 
     ctx.save();
 
     // Glow
     ctx.shadowColor = cluster.dominantColor;
-    ctx.shadowBlur = 15;
-    ctx.globalAlpha = 0.3 * transitionAlpha;
+    ctx.shadowBlur = 10 * zoomFactor;
+    ctx.globalAlpha = 0.25 * transitionAlpha;
     ctx.fillStyle = cluster.dominantColor;
     ctx.beginPath();
-    ctx.arc(cluster.x, cluster.y, radius * 1.5, 0, Math.PI * 2);
+    ctx.arc(cluster.x, cluster.y, radius * 1.4, 0, Math.PI * 2);
     ctx.fill();
 
     // Core dot
-    ctx.shadowBlur = 8;
+    ctx.shadowBlur = 6 * zoomFactor;
     ctx.globalAlpha = 0.8 * transitionAlpha;
     ctx.beginPath();
     ctx.arc(cluster.x, cluster.y, radius, 0, Math.PI * 2);
     ctx.fill();
 
-    // Count label
-    ctx.shadowBlur = 0;
-    ctx.globalAlpha = transitionAlpha;
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 11px 'Geist Mono', monospace";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(String(cluster.nodeCount), cluster.x, cluster.y);
+    // Count label — only show when clusters are big enough to read
+    if (radius > 8) {
+      const fontSize = Math.max(8, Math.min(11, radius * 0.7));
+      ctx.shadowBlur = 0;
+      ctx.globalAlpha = transitionAlpha;
+      ctx.fillStyle = "#ffffff";
+      ctx.font = `bold ${fontSize}px 'Geist Mono', monospace`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(String(cluster.nodeCount), cluster.x, cluster.y);
+    }
 
     ctx.restore();
   }

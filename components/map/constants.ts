@@ -2,16 +2,16 @@ import type { ZoomTier } from "./helpers";
 
 // ── Projection ──────────────────────────────────────────────────
 export const PROJECTION_CENTER: [number, number] = [-19.0, 64.5];
-export const PROJECTION_SCALE = 2800; // fits Iceland nicely in viewport
+export const PROJECTION_SCALE = 800; // shows North Atlantic with cable context
 
 // ── Zoom tiers ──────────────────────────────────────────────────
 export const ZOOM_TIER_THRESHOLDS: Record<ZoomTier, [number, number]> = {
-  1: [0.8, 3.0],    // Country overview
-  2: [3.0, 10.0],   // Regional
-  3: [10.0, 150.0],  // Node detail
+  1: [0.3, 8.0],     // Country overview (wider range — includes zoomed-out Atlantic view)
+  2: [8.0, 30.0],    // Regional (individual nodes)
+  3: [30.0, 500.0],  // Node detail (expanded sub-components)
 };
-export const MIN_ZOOM = 0.8;
-export const MAX_ZOOM = 150;
+export const MIN_ZOOM = 0.15;
+export const MAX_ZOOM = 500;
 export const TIER_TRANSITION_DURATION = 0.3; // seconds
 
 export function getZoomTier(k: number): ZoomTier {
