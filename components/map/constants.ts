@@ -1,8 +1,8 @@
 import type { ZoomTier } from "./helpers";
 
 // ── Projection ──────────────────────────────────────────────────
-export const PROJECTION_CENTER: [number, number] = [-15.0, 58.0];
-export const PROJECTION_SCALE = 500; // shows full North Atlantic — Iceland, Europe, Greenland
+export const PROJECTION_CENTER: [number, number] = [-18.0, 61.0];
+export const PROJECTION_SCALE = 900; // North Atlantic view — Iceland prominent, Europe/Greenland visible
 
 // ── Zoom tiers ──────────────────────────────────────────────────
 export const ZOOM_TIER_THRESHOLDS: Record<ZoomTier, [number, number]> = {

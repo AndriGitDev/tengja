@@ -32,7 +32,7 @@ export function Map({ onNodeClick, onZoomTierChange }: MapProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const geoDataRef = useRef<GeoJSON | null>(null);
-  const staticCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  // Static canvas removed — all layers render directly each frame
   const sizeRef = useRef({ width: 0, height: 0 });
   const hoveredNodeRef = useRef<string | null>(null);
 
@@ -81,7 +81,7 @@ export function Map({ onNodeClick, onZoomTierChange }: MapProps) {
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    staticCanvasRef.current = document.createElement("canvas");
+    // All rendering happens directly on the main canvas each frame
 
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
@@ -94,10 +94,8 @@ export function Map({ onNodeClick, onZoomTierChange }: MapProps) {
         canvas.style.height = `${height}px`;
         sizeRef.current = { width, height };
 
-        if (staticCanvasRef.current) {
-          staticCanvasRef.current.width = width * dpr;
-          staticCanvasRef.current.height = height * dpr;
-        }
+        // Mark for redraw (projection translate updated)
+        // staticDirtyRef no longer used but zoom hook still sets it
 
         // Center projection in viewport
         projectionRef.current.translate([width / 2, height / 2]);
@@ -206,34 +204,16 @@ export function Map({ onNodeClick, onZoomTierChange }: MapProps) {
           expandedNodeIds,
         };
 
-        // Re-render static layers if dirty
-        if (staticDirtyRef.current && staticCanvasRef.current) {
-          const sctx = staticCanvasRef.current.getContext("2d");
-          if (sctx) {
-            sctx.save();
-            sctx.scale(dpr, dpr);
-            sctx.clearRect(0, 0, width, height);
-
-            const staticRc: RenderContext = { ...rc, ctx: sctx };
-            drawBackground(staticRc);
-            drawGraticule(staticRc);
-            drawCoastline(staticRc, geoDataRef.current);
-            drawRoutes(staticRc);
-
-            sctx.restore();
-          }
-          staticDirtyRef.current = false;
-        }
-
-        // Clear and draw main canvas
+        // Clear and draw all layers directly on main canvas
         ctx.save();
         ctx.scale(dpr, dpr);
         ctx.clearRect(0, 0, width, height);
 
-        // Composite static layers
-        if (staticCanvasRef.current) {
-          ctx.drawImage(staticCanvasRef.current, 0, 0, width, height);
-        }
+        // Base layers
+        drawBackground(rc);
+        drawGraticule(rc);
+        drawCoastline(rc, geoDataRef.current);
+        drawRoutes(rc);
 
         // Dynamic layers
         drawParticles(rc, particlesRef.current, cableSegmentsRef.current);

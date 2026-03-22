@@ -41,7 +41,7 @@ export function draw(rc: RenderContext, geoData: GeoJSON | null): void {
       ctx.restore();
     }
 
-    // Nordic/nearby countries — clearly visible landmasses
+    // Nordic/nearby countries — visible landmasses
     if (!isIceland && isNordic) {
       ctx.beginPath();
       path(feature as unknown as d3.GeoPermissibleObjects);
@@ -65,7 +65,6 @@ export function draw(rc: RenderContext, geoData: GeoJSON | null): void {
       ctx.lineWidth = 2 / transform.k;
       ctx.globalAlpha = 1.0;
     } else if (isNordic) {
-      // Visible coastlines for cable endpoint countries
       ctx.strokeStyle = "#506888";
       ctx.lineWidth = 1.5 / transform.k;
       ctx.globalAlpha = 1.0;
