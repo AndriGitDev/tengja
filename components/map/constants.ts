@@ -53,6 +53,6 @@ export const EXPANSION_RADIUS = 60; // px from parent center
 export const EXPANSION_STAGGER = 0.05; // seconds between sub-node appearances
 
 // ── Background ──────────────────────────────────────────────────
-export const BG_COLOR = "#060609";
-export const OCEAN_COLOR = "#050508";
+export const BG_COLOR = "#040408";
+export const OCEAN_COLOR = "#030306";
 export const VIGNETTE_COLOR = "rgba(0, 0, 0, 0.6)";

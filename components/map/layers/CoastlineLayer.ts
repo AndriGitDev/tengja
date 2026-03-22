@@ -20,61 +20,64 @@ export function draw(rc: RenderContext, geoData: GeoJSON | null): void {
     // Skip far-away countries at high zoom
     if (zoomTier === 3 && !isIceland && !isNordic) continue;
 
-    // Iceland fill with glow
+    // ── Fills ──────────────────────────────────────────────────
     if (isIceland) {
+      // Iceland: dark fill + cyan glow
       ctx.save();
-      ctx.shadowColor = "#00f0ff";
-      ctx.shadowBlur = 25 / transform.k;
       ctx.beginPath();
       path(feature as unknown as d3.GeoPermissibleObjects);
-      ctx.fillStyle = "rgba(0, 240, 255, 0.08)";
+      ctx.fillStyle = "#101828";
       ctx.fill();
       ctx.restore();
 
+      // Glow pass
       ctx.save();
       ctx.shadowColor = "#00f0ff";
-      ctx.shadowBlur = 40 / transform.k;
+      ctx.shadowBlur = 20 / transform.k;
       ctx.beginPath();
       path(feature as unknown as d3.GeoPermissibleObjects);
-      ctx.fillStyle = "rgba(0, 240, 255, 0.04)";
+      ctx.fillStyle = "rgba(0, 240, 255, 0.12)";
       ctx.fill();
       ctx.restore();
-    }
-
-    // Nordic/nearby countries — visible landmasses
-    if (!isIceland && isNordic) {
+    } else if (isNordic) {
+      // Nordic/nearby: visible dark landmass
       ctx.beginPath();
       path(feature as unknown as d3.GeoPermissibleObjects);
-      ctx.fillStyle = "#1a2038";
+      ctx.fillStyle = "#0f1320";
+      ctx.fill();
+    } else {
+      // Other countries: subtle but present
+      ctx.beginPath();
+      path(feature as unknown as d3.GeoPermissibleObjects);
+      ctx.fillStyle = "#0c0f1a";
       ctx.fill();
     }
 
-    // All other countries
-    if (!isIceland && !isNordic) {
-      ctx.beginPath();
-      path(feature as unknown as d3.GeoPermissibleObjects);
-      ctx.fillStyle = "#141828";
-      ctx.fill();
-    }
-
-    // Borders
+    // ── Borders ────────────────────────────────────────────────
     ctx.beginPath();
     path(feature as unknown as d3.GeoPermissibleObjects);
     if (isIceland) {
+      ctx.save();
+      ctx.shadowColor = "#00f0ff";
+      ctx.shadowBlur = 8 / transform.k;
       ctx.strokeStyle = "#00f0ff";
       ctx.lineWidth = 2 / transform.k;
       ctx.globalAlpha = 1.0;
+      ctx.stroke();
+      ctx.restore();
     } else if (isNordic) {
-      ctx.strokeStyle = "#506888";
-      ctx.lineWidth = 1.5 / transform.k;
+      ctx.strokeStyle = "#3a5070";
+      ctx.lineWidth = 1.2 / transform.k;
+      ctx.globalAlpha = 0.9;
+      ctx.stroke();
       ctx.globalAlpha = 1.0;
     } else {
-      ctx.strokeStyle = "#303850";
-      ctx.lineWidth = 0.8 / transform.k;
-      ctx.globalAlpha = 0.7;
+      ctx.strokeStyle = "#252a3a";
+      ctx.lineWidth = 0.6 / transform.k;
+      ctx.globalAlpha = 0.5;
+      ctx.stroke();
+      ctx.globalAlpha = 1.0;
     }
-    ctx.stroke();
-    ctx.globalAlpha = 1.0;
   }
 
   ctx.restore();
