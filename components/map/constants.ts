@@ -46,11 +46,7 @@ export const NEARBY_COUNTRIES = new Set([
   "Belgium", "France",
 ]);
 
-// ── Particles ───────────────────────────────────────────────────
-export const PARTICLES_PER_CABLE = 50;
-export const PARTICLE_BASE_SPEED = 0.15;
-export const PARTICLE_SPEED_VARIANCE = 0.1;
-export const PARTICLE_RADIUS = 2.5;
+// ── Particles (per-cable scaling is in CableLayer.ts) ───────────
 
 // ── Node expansion ──────────────────────────────────────────────
 export const EXPANSION_RADIUS = 60; // px from parent center
