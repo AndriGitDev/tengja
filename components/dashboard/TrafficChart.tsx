@@ -109,11 +109,10 @@ export function TrafficChart() {
   }
 
   return (
-    <div className="px-4">
-      <div className="bg-[var(--noc-surface)] border border-[var(--noc-border)] rounded-lg p-4">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="font-mono text-xs tracking-[0.2em] text-[var(--noc-text-dim)] uppercase">
-            Umferð yfir tíma
+    <div className="bg-[var(--noc-surface)] border border-[var(--noc-border)] rounded-lg p-4">
+      <div className="flex items-center justify-between mb-2">
+        <h2 className="font-mono text-xs tracking-[0.2em] text-[var(--noc-text-dim)] uppercase">
+          Umferð yfir tíma
           </h2>
           <span className="font-mono text-sm font-bold text-[var(--noc-text)]">
             {total.toFixed(1)} Tbps
@@ -131,7 +130,6 @@ export function TrafficChart() {
             </div>
           ))}
         </div>
-      </div>
     </div>
   );
 }

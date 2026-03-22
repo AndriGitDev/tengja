@@ -26,7 +26,7 @@ export function CableCards() {
   }, []);
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
       {cables.map((cable) => {
         const cm = metrics.find((m) => m.cableId === cable.id);
         const history = historyRef.current[cable.id] || [];

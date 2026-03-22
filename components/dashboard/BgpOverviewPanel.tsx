@@ -43,11 +43,10 @@ export function BgpOverviewPanel() {
   }, []);
 
   return (
-    <div className="px-4">
-      <div className="bg-[var(--noc-surface)] border border-[var(--noc-border)] rounded-lg p-4">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="font-mono text-xs tracking-[0.2em] text-[var(--noc-text-dim)] uppercase">
-            BGP Yfirlit Íslands
+    <div className="bg-[var(--noc-surface)] border border-[var(--noc-border)] rounded-lg p-4">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="font-mono text-xs tracking-[0.2em] text-[var(--noc-text-dim)] uppercase">
+          BGP Yfirlit Íslands
           </h2>
           {data && (
             <span className="font-mono text-[10px] text-[var(--noc-text-dim)]">
@@ -159,7 +158,6 @@ export function BgpOverviewPanel() {
             </div>
           </>
         )}
-      </div>
     </div>
   );
 }

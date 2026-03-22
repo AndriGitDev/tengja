@@ -14,18 +14,18 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[var(--noc-bg)]">
       <Header />
-      <div className="flex flex-col gap-4 py-4 max-w-[1400px] mx-auto">
+      <div className="flex flex-col gap-3 py-3 max-w-[1860px] mx-auto px-4">
         <CableCards />
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
           <NetworkDiagram />
           <TrafficChart />
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
           <IxpPeeringPanel />
           <DnsRootPanel />
+          <BgpOverviewPanel />
         </div>
         <ProbePanel />
-        <BgpOverviewPanel />
         <GlobalStats />
       </div>
     </main>

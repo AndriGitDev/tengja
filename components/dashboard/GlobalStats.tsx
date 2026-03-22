@@ -56,8 +56,7 @@ export function GlobalStats() {
   if (!metrics) return null;
 
   return (
-    <div className="px-4">
-      <div className="flex items-center justify-center gap-6 px-4 py-3 bg-[var(--noc-surface)] border border-[var(--noc-border)] rounded-lg">
+    <div className="flex items-center justify-center gap-6 px-4 py-3 bg-[var(--noc-surface)] border border-[var(--noc-border)] rounded-lg">
         {LABELS.map(({ key, label, format }) => (
           <div key={key} className="flex items-center gap-2">
             <span className="font-mono text-[10px] text-[var(--noc-text-dim)] tracking-wider">
@@ -68,7 +67,6 @@ export function GlobalStats() {
             </span>
           </div>
         ))}
-      </div>
     </div>
   );
 }

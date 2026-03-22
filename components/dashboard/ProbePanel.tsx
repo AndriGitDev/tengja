@@ -40,11 +40,10 @@ export function ProbePanel() {
   const onlineCount = probes.filter((p) => p.status === "Connected").length;
 
   return (
-    <div className="px-4">
-      <div className="bg-[var(--noc-surface)] border border-[var(--noc-border)] rounded-lg p-4">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="font-mono text-xs tracking-[0.2em] text-[var(--noc-text-dim)] uppercase">
-            RIPE Atlas Mælar
+    <div className="bg-[var(--noc-surface)] border border-[var(--noc-border)] rounded-lg p-4">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="font-mono text-xs tracking-[0.2em] text-[var(--noc-text-dim)] uppercase">
+          RIPE Atlas Mælar
           </h2>
           <span className="font-mono text-xs text-[var(--noc-green)]">
             {loading ? "..." : `${onlineCount} tengdir`}
@@ -129,7 +128,6 @@ export function ProbePanel() {
             })}
           </div>
         )}
-      </div>
     </div>
   );
 }

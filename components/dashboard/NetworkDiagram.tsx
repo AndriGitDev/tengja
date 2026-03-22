@@ -86,11 +86,10 @@ export function NetworkDiagram() {
   const visibleNodes = nodes.filter((n) => POSITIONS[n.id]);
 
   return (
-    <div className="px-4">
-      <div className="bg-[var(--noc-surface)] border border-[var(--noc-border)] rounded-lg p-4">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="font-mono text-xs tracking-[0.2em] text-[var(--noc-text-dim)] uppercase">
-            Nettopólógía
+    <div className="bg-[var(--noc-surface)] border border-[var(--noc-border)] rounded-lg p-4">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="font-mono text-xs tracking-[0.2em] text-[var(--noc-text-dim)] uppercase">
+          Nettopólógía
           </h2>
           <div className="flex gap-4">
             {Object.entries(TYPE_LABELS).map(([type, label]) => (
@@ -191,7 +190,6 @@ export function NetworkDiagram() {
             {memberCount} RIX MEÐLIMIR
           </text>
         </svg>
-      </div>
     </div>
   );
 }
