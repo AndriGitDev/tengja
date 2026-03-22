@@ -33,10 +33,22 @@ export const dataSources: DataSource[] = [
     description: "Cable routes, capacities, and landing points (DANICE, FARICE-1, Greenland Connect)",
   },
   {
-    name: "Múli-IXP (ixp.c.is)",
-    url: "https://ixp.c.is",
-    type: "static",
-    description: "Iceland's Internet Exchange — 6 members, peering data",
+    name: "PeeringDB",
+    url: "https://www.peeringdb.com/api/netixlan?ix_id=228",
+    type: "live",
+    description: "RIX peering members — 30+ ASNs, port speeds, IPv4/v6 addresses",
+  },
+  {
+    name: "RIPEstat Routing",
+    url: "https://stat.ripe.net/data/routing-status/data.json",
+    type: "live",
+    description: "BGP routing status — prefix counts, neighbor counts, visibility scores",
+  },
+  {
+    name: "RIPE Atlas DNS Roots",
+    url: "https://atlas.ripe.net/api/v2/measurements/",
+    type: "live",
+    description: "Real-time ping latency from Iceland probes to all 13 DNS root servers",
   },
   {
     name: "Cable throughput",

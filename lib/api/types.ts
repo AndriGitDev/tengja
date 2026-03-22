@@ -54,3 +54,77 @@ export interface RipeStatCountryResource {
     };
   };
 }
+
+// === PeeringDB Types ===
+
+export interface PeeringDbNetIxLan {
+  id: number;
+  net_id: number;
+  ix_id: number;
+  name: string;
+  asn: number;
+  speed: number; // Port speed in Mbps (e.g. 100000 = 100G)
+  ipaddr4: string | null;
+  ipaddr6: string | null;
+  is_rs_peer: boolean;
+  operational: boolean;
+}
+
+export interface RixMemberSummary {
+  asn: number;
+  name: string;
+  totalSpeedMbps: number;
+  portCount: number;
+  speedLabel: string; // e.g. "2×100G"
+  hasIpv4: boolean;
+  hasIpv6: boolean;
+  isRsPeer: boolean;
+}
+
+export interface RixSummary {
+  members: RixMemberSummary[];
+  totalCapacityGbps: number;
+  uniqueAsnCount: number;
+  totalPortCount: number;
+  lastUpdated: string;
+}
+
+// === RIPEstat Routing Status Types ===
+
+export interface AsnRoutingSummary {
+  asn: number;
+  name: string;
+  prefixesV4: number;
+  prefixesV6: number;
+  neighbors: number;
+  visibilityV4: number; // percentage 0-100
+  announced: boolean;
+}
+
+export interface IcelandBgpOverview {
+  totalAsns: number;
+  totalIpv4Prefixes: number;
+  totalIpv6Prefixes: number;
+  keyAsns: AsnRoutingSummary[];
+  lastUpdated: string;
+}
+
+// === DNS Root Latency Types ===
+
+export interface DnsRootServer {
+  letter: string;
+  name: string;
+  operator: string;
+  ipv4: string;
+  measurementId: number; // RIPE Atlas built-in measurement ID
+}
+
+export interface DnsRootLatencySummary {
+  rootServer: string; // letter
+  serverName: string;
+  operator: string;
+  avgRtt: number;
+  minRtt: number;
+  maxRtt: number;
+  probeCount: number;
+}

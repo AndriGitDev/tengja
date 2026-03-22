@@ -6,6 +6,9 @@ import { NetworkDiagram } from "@/components/dashboard/NetworkDiagram";
 import { ProbePanel } from "@/components/dashboard/ProbePanel";
 import { TrafficChart } from "@/components/dashboard/TrafficChart";
 import { GlobalStats } from "@/components/dashboard/GlobalStats";
+import { IxpPeeringPanel } from "@/components/dashboard/IxpPeeringPanel";
+import { DnsRootPanel } from "@/components/dashboard/DnsRootPanel";
+import { BgpOverviewPanel } from "@/components/dashboard/BgpOverviewPanel";
 
 export default function Home() {
   return (
@@ -17,7 +20,12 @@ export default function Home() {
           <NetworkDiagram />
           <TrafficChart />
         </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-4">
+          <IxpPeeringPanel />
+          <DnsRootPanel />
+        </div>
         <ProbePanel />
+        <BgpOverviewPanel />
         <GlobalStats />
       </div>
     </main>

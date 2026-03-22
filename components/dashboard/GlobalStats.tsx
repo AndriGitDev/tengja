@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { generateCableMetrics, generateGlobalMetrics, type GlobalMetrics } from "@/lib/simulation/metrics";
 
 const LABELS = [
@@ -13,9 +13,41 @@ const LABELS = [
 
 export function GlobalStats() {
   const [metrics, setMetrics] = useState<GlobalMetrics | null>(null);
+  const realPeers = useRef<number | null>(null);
+  const realProbes = useRef<number | null>(null);
+
+  // Fetch real counts once, refresh every 5 min
+  useEffect(() => {
+    async function fetchRealCounts() {
+      try {
+        const [rixRes, probeRes] = await Promise.all([
+          fetch("/api/peeringdb/rix"),
+          fetch("/api/ripe/probes"),
+        ]);
+        if (rixRes.ok) {
+          const rix = await rixRes.json();
+          realPeers.current = rix.uniqueAsnCount ?? null;
+        }
+        if (probeRes.ok) {
+          const probes = await probeRes.json();
+          realProbes.current = Array.isArray(probes) ? probes.length : null;
+        }
+      } catch {
+        // Keep existing values on error
+      }
+    }
+    fetchRealCounts();
+    const id = setInterval(fetchRealCounts, 300000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
-    const tick = () => setMetrics(generateGlobalMetrics(generateCableMetrics()));
+    const tick = () => {
+      const m = generateGlobalMetrics(generateCableMetrics());
+      if (realPeers.current !== null) m.ixPeers = realPeers.current;
+      if (realProbes.current !== null) m.ripeProbes = realProbes.current;
+      setMetrics(m);
+    };
     tick();
     const id = setInterval(tick, 3000);
     return () => clearInterval(id);

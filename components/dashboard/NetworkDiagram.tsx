@@ -1,8 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { cables } from "@/lib/data/cables";
 import { nodes } from "@/lib/data/nodes";
-import { ixpMembers } from "@/lib/data/ixp-members";
 
 // Logical positions for the SVG schematic
 const POSITIONS: Record<string, { x: number; y: number }> = {
@@ -74,6 +74,15 @@ const INTERNAL_LINKS = [
 ];
 
 export function NetworkDiagram() {
+  const [memberCount, setMemberCount] = useState(6);
+
+  useEffect(() => {
+    fetch("/api/peeringdb/rix")
+      .then((r) => r.ok ? r.json() : null)
+      .then((d) => { if (d?.uniqueAsnCount) setMemberCount(d.uniqueAsnCount); })
+      .catch(() => {});
+  }, []);
+
   const visibleNodes = nodes.filter((n) => POSITIONS[n.id]);
 
   return (
@@ -179,7 +188,7 @@ export function NetworkDiagram() {
 
           {/* IXP members label */}
           <text x={420} y={310} textAnchor="middle" fill="#00ff88" fontSize={8} fontFamily="'Geist Mono', monospace" opacity={0.5}>
-            {ixpMembers.length} RIX MEÐLIMIR
+            {memberCount} RIX MEÐLIMIR
           </text>
         </svg>
       </div>
