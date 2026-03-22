@@ -1,8 +1,8 @@
 import type { ZoomTier } from "./helpers";
 
 // ── Projection ──────────────────────────────────────────────────
-export const PROJECTION_CENTER: [number, number] = [-19.0, 64.5];
-export const PROJECTION_SCALE = 800; // shows North Atlantic with cable context
+export const PROJECTION_CENTER: [number, number] = [-15.0, 58.0];
+export const PROJECTION_SCALE = 500; // shows full North Atlantic — Iceland, Europe, Greenland
 
 // ── Zoom tiers ──────────────────────────────────────────────────
 export const ZOOM_TIER_THRESHOLDS: Record<ZoomTier, [number, number]> = {
@@ -53,6 +53,6 @@ export const EXPANSION_RADIUS = 60; // px from parent center
 export const EXPANSION_STAGGER = 0.05; // seconds between sub-node appearances
 
 // ── Background ──────────────────────────────────────────────────
-export const BG_COLOR = "#0a0a0f";
-export const OCEAN_COLOR = "#080810";
+export const BG_COLOR = "#060609";
+export const OCEAN_COLOR = "#050508";
 export const VIGNETTE_COLOR = "rgba(0, 0, 0, 0.6)";

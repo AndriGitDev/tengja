@@ -31,7 +31,6 @@ export function draw(rc: RenderContext, geoData: GeoJSON | null): void {
       ctx.fill();
       ctx.restore();
 
-      // Second pass for stronger inner glow
       ctx.save();
       ctx.shadowColor = "#00f0ff";
       ctx.shadowBlur = 40 / transform.k;
@@ -42,19 +41,19 @@ export function draw(rc: RenderContext, geoData: GeoJSON | null): void {
       ctx.restore();
     }
 
-    // Nordic/nearby country fills — visible dark landmass against ocean
+    // Nordic/nearby countries — clearly visible landmasses
     if (!isIceland && isNordic) {
       ctx.beginPath();
       path(feature as unknown as d3.GeoPermissibleObjects);
-      ctx.fillStyle = "rgba(20, 22, 35, 0.8)";
+      ctx.fillStyle = "#1a2038";
       ctx.fill();
     }
 
-    // All other countries — subtle fill so they're distinguishable from ocean
+    // All other countries
     if (!isIceland && !isNordic) {
       ctx.beginPath();
       path(feature as unknown as d3.GeoPermissibleObjects);
-      ctx.fillStyle = "rgba(15, 16, 28, 0.5)";
+      ctx.fillStyle = "#141828";
       ctx.fill();
     }
 
@@ -66,14 +65,14 @@ export function draw(rc: RenderContext, geoData: GeoJSON | null): void {
       ctx.lineWidth = 2 / transform.k;
       ctx.globalAlpha = 1.0;
     } else if (isNordic) {
-      // Brighter, thicker borders for cable endpoint countries
-      ctx.strokeStyle = "#5a6a8a";
-      ctx.lineWidth = 1.2 / transform.k;
-      ctx.globalAlpha = 0.8;
+      // Visible coastlines for cable endpoint countries
+      ctx.strokeStyle = "#506888";
+      ctx.lineWidth = 1.5 / transform.k;
+      ctx.globalAlpha = 1.0;
     } else {
-      ctx.strokeStyle = "#2a2a40";
-      ctx.lineWidth = 0.6 / transform.k;
-      ctx.globalAlpha = 0.4;
+      ctx.strokeStyle = "#303850";
+      ctx.lineWidth = 0.8 / transform.k;
+      ctx.globalAlpha = 0.7;
     }
     ctx.stroke();
     ctx.globalAlpha = 1.0;

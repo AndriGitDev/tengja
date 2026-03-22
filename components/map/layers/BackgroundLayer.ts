@@ -32,14 +32,14 @@ export function drawOverlay(rc: RenderContext): void {
   }
   ctx.restore();
 
-  // Edge vignette
+  // Edge vignette — very subtle so it doesn't hide countries at edges
   ctx.save();
   const cx = width / 2;
   const cy = height / 2;
   const maxR = Math.sqrt(cx * cx + cy * cy);
-  const vignette = ctx.createRadialGradient(cx, cy, maxR * 0.5, cx, cy, maxR);
+  const vignette = ctx.createRadialGradient(cx, cy, maxR * 0.7, cx, cy, maxR);
   vignette.addColorStop(0, "rgba(0, 0, 0, 0)");
-  vignette.addColorStop(1, "rgba(0, 0, 0, 0.4)");
+  vignette.addColorStop(1, "rgba(0, 0, 0, 0.15)");
   ctx.fillStyle = vignette;
   ctx.fillRect(0, 0, width, height);
   ctx.restore();
