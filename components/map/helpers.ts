@@ -77,8 +77,11 @@ export function hitTestNode(
     const dx = mx - projected[0];
     const dy = my - projected[1];
     const dist = Math.sqrt(dx * dx + dy * dy);
-    const hitRadius = 14 * (TYPE_SCALE[node.type] || 1) * Math.min(k * 0.5, 2);
-    if (dist < Math.max(hitRadius, 10)) return node;
+    // Match the visual node size: shrinks at high zoom
+    const zoomScale = Math.min(1, 6 / Math.max(k, 1));
+    const nodeScale = (TYPE_SCALE[node.type] || 1) * Math.max(zoomScale, 0.35);
+    const hitRadius = 14 * nodeScale;
+    if (dist < Math.max(hitRadius, 8)) return node;
   }
   return null;
 }

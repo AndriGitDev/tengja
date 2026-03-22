@@ -66,13 +66,16 @@ export function drawNodes(
     if (!isInViewport(nx, ny, width, height)) continue;
 
     const color = TYPE_COLORS[node.type] || "#ffffff";
-    const scale = TYPE_SCALE[node.type] || 1.0;
+    const baseScale = TYPE_SCALE[node.type] || 1.0;
+    // Shrink nodes at high zoom so they don't overlap in dense areas
+    const zoomScale = Math.min(1, 6 / Math.max(transform.k, 1));
+    const scale = baseScale * Math.max(zoomScale, 0.35);
     const isHovered = hoveredNodeId === node.id;
 
     // Glow disc
     ctx.save();
     ctx.shadowColor = color;
-    ctx.shadowBlur = 12;
+    ctx.shadowBlur = 12 * scale;
     const glowAlpha = isHovered ? 0.5 : 0.15 + Math.sin(t * 2) * 0.1;
     ctx.globalAlpha = glowAlpha * transitionAlpha;
     ctx.fillStyle = color;

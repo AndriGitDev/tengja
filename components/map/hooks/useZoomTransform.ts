@@ -32,6 +32,10 @@ export function useZoomTransform(
     const zoom = d3
       .zoom<HTMLCanvasElement, unknown>()
       .scaleExtent([MIN_ZOOM, MAX_ZOOM])
+      .wheelDelta((event: WheelEvent) => {
+        // Gentler zoom for finer control at high zoom levels
+        return -event.deltaY * (event.deltaMode === 1 ? 0.05 : event.deltaMode ? 1 : 0.002);
+      })
       .on("zoom", (event: d3.D3ZoomEvent<HTMLCanvasElement, unknown>) => {
         const t = event.transform;
         transformRef.current = t;

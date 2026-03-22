@@ -24,7 +24,7 @@ export function DetailPanel({ selectedId, type, onClose }: DetailPanelProps) {
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: 300, opacity: 0 }}
           transition={{ type: "spring", damping: 25, stiffness: 200 }}
-          className="absolute top-14 right-4 z-10 w-72 bg-[var(--noc-surface)]/90 backdrop-blur-md border border-[var(--noc-border)] rounded-lg overflow-hidden"
+          className="absolute top-14 right-4 z-10 w-72 pointer-events-auto bg-[var(--noc-surface)]/90 backdrop-blur-md border border-[var(--noc-border)] rounded-lg overflow-hidden"
         >
           <div className="flex items-center justify-between p-3 border-b border-[var(--noc-border)]">
             <span className="font-mono text-xs tracking-wider text-[var(--noc-text-dim)]">

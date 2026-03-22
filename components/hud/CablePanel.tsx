@@ -33,7 +33,7 @@ export function CablePanel({ onCableClick }: CablePanelProps) {
   }, [tick]);
 
   return (
-    <div className="absolute top-14 left-4 z-10 w-64 space-y-1">
+    <div className="absolute top-14 left-4 z-10 w-64 space-y-1 pointer-events-none">
       {cables.map((cable) => {
         const cm = metrics.find((m) => m.cableId === cable.id);
         const history = historyRef.current[cable.id] || [];
@@ -48,7 +48,7 @@ export function CablePanel({ onCableClick }: CablePanelProps) {
           <button
             key={cable.id}
             onClick={() => onCableClick?.(cable.id)}
-            className="w-full text-left bg-[var(--noc-surface)]/80 backdrop-blur-sm border border-[var(--noc-border)] rounded px-3 py-2 hover:border-[color:var(--noc-cyan)]/30 transition-colors"
+            className="pointer-events-auto w-full text-left bg-[var(--noc-surface)]/80 backdrop-blur-sm border border-[var(--noc-border)] rounded px-3 py-2 hover:border-[color:var(--noc-cyan)]/30 transition-colors"
           >
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-2">

@@ -48,7 +48,7 @@ export function MetricsTicker() {
   ];
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 z-10 bg-[var(--noc-surface)]/70 backdrop-blur-sm border-t border-[var(--noc-border)]">
+    <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none bg-[var(--noc-surface)]/70 backdrop-blur-sm border-t border-[var(--noc-border)]">
       <div className="flex items-center justify-center gap-6 px-4 py-2 overflow-x-auto">
         {items.map((item, i) => (
           <div key={i} className="flex items-center gap-2 whitespace-nowrap">

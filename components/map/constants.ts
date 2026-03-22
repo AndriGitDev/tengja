@@ -6,12 +6,12 @@ export const PROJECTION_SCALE = 2800; // fits Iceland nicely in viewport
 
 // ── Zoom tiers ──────────────────────────────────────────────────
 export const ZOOM_TIER_THRESHOLDS: Record<ZoomTier, [number, number]> = {
-  1: [0.8, 3.0],   // Country overview
-  2: [3.0, 10.0],  // Regional
-  3: [10.0, 40.0], // Node detail
+  1: [0.8, 3.0],    // Country overview
+  2: [3.0, 10.0],   // Regional
+  3: [10.0, 150.0],  // Node detail
 };
 export const MIN_ZOOM = 0.8;
-export const MAX_ZOOM = 40;
+export const MAX_ZOOM = 150;
 export const TIER_TRANSITION_DURATION = 0.3; // seconds
 
 export function getZoomTier(k: number): ZoomTier {
