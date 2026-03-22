@@ -102,11 +102,16 @@ export function useSemanticZoom() {
         }
       }
 
-      // Compute expanded nodes (tier 3)
+      // Compute expanded nodes (tier 3) — only expand IXPs and landing stations
+      // which have meaningful sub-components. Other types are too noisy.
+      const expandableTypes = new Set(["ixp", "landing"]);
       const expandedNodeIds = new Set<string>();
       if (zoomTier === 3) {
         for (const vn of visibleNodes) {
-          expandedNodeIds.add(vn.id);
+          const node = nodes.find((n) => n.id === vn.id);
+          if (node && expandableTypes.has(node.type)) {
+            expandedNodeIds.add(vn.id);
+          }
         }
       }
 
