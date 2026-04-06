@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className="font-sans bg-[var(--noc-bg)] text-[var(--noc-text)] antialiased">
         {children}
         <Script
-          src="https://swetrix.kastro.is/swetrix.js"
+          src="https://cdn.jsdelivr.net/npm/swetrix@latest/dist/swetrix.js"
           strategy="afterInteractive"
         />
         <Script id="swetrix-init" strategy="afterInteractive">
