@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,6 +19,33 @@ export default function RootLayout({
     <html lang="is" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body className="font-sans bg-[var(--noc-bg)] text-[var(--noc-text)] antialiased">
         {children}
+        <Script
+          src="https://swetrix.kastro.is/swetrix.js"
+          strategy="afterInteractive"
+        />
+        <Script id="swetrix-init" strategy="afterInteractive">
+          {`
+            document.addEventListener('DOMContentLoaded', function() {
+              swetrix.init('WILzAne5IauA', {
+                apiURL: 'https://swetrixapi.kastro.is/log',
+              })
+              swetrix.trackViews()
+            })
+            if (document.readyState !== 'loading') {
+              swetrix.init('WILzAne5IauA', {
+                apiURL: 'https://swetrixapi.kastro.is/log',
+              })
+              swetrix.trackViews()
+            }
+          `}
+        </Script>
+        <noscript>
+          <img
+            src="https://swetrixapi.kastro.is/log/noscript?pid=WILzAne5IauA"
+            alt=""
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </noscript>
       </body>
     </html>
   );
